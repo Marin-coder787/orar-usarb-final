@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orar USARB</title>
+    <style>
+        body {
+            background-image: url('https://media.usarb.md/wp-content/uploads/2023/05/DJI_0589-1024x576.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        #headerLogo {
+            margin-bottom: 10px;
+        }
+        #headerText {
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 0;
+            padding: 5px 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: inline-block;
+            border-radius: 5px;
+        }
+        h4, p {
+            margin: 0;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 50px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            border-radius: 50px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+        .uk-table th, .uk-table td {
+            text-align: center;
+            padding: 10px;
+        }
+        .uk-table th {
+            background-color: green;
+            color: white;
+        }
+        .uk-table td {
+            background-color: white;
+        }
+        #tableLegend p {
+            margin: 0 10px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="header-container">
+        <img src="http://orar.usarb.md/img/logo_usarb.png" alt="Logo Universității" width="130" height="191" id="headerLogo">
+        <h4 id="headerText">UNIVERSITATEA DE STAT „ALECU RUSSO” DIN BĂLȚI</h4>
+    </div>
+    
+    <div class="uk-grid">
+        <section class="uk-width-1-2">
+            <div class="uk-alert">
+                <h4 class="uk-text-center text-white">Orarul Cursurilor</h4>
+            </div>
+            <div class="uk-flex uk-flex-between uk-flex-nowrap">
+                <button id="studentMode" class="uk-button active myToggler">Grupe</button>
+                <button id="teacherMode" class="uk-button changer2 myToggler">Profesori</button>
+                <button id="officeMode" class="uk-button changer myToggler">Aule</button>
+            </div>
+            <div class="uk-flex uk-margin-top">
+                <p class="text-white">Regim pentru student</p>
+                <label class="switch uk-margin-left">
+                    <input type="checkbox" id="isStudentModeValue">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div id="searchZone" class="uk-search uk-search-default uk-margin-top">
+                <span uk-search-icon="uk-search-icon" class="uk-icon">
+                    <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"></circle>
+                        <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"></path>
+                    </svg>
+                </span>
+                <input type="search" id="searchInput" autocomplete="off" class="uk-search-input uk-width-1-1">
+            </div>
+
+            <ul class="uk-list uk-list-divider">
+                <li tabindex="0" class="groupName MI21Z">MI21Z</li>
+            </ul>
+
+            <div id="resultZone" class="uk-width-1-1 uk-background-default uk-margin-top"></div>
+            
+            <select id="daySelector" class="uk-select uk-margin-top">
+                <option value="-1"></option>
+                <option value="0">Luni</option>
+                <option value="1">Marți</option>
+                <option value="2" selected="selected">Miercuri</option>
+                <option value="3">Joi</option>
+                <option value="4">Vineri</option>
+                <option value="5">Sîmbătă</option>
+                <option value="6">Duminică</option>
+            </select>
+
+            <div id="weekSelector" class="uk-select uk-margin-top">
+                <option selected="selected" value="13">13 (25.11.2024 - 1.12.2024)</option>
+            </div>
+            <table id="shorTable" class="uk-table">
+                <thead>
+                    <tr>
+                        <th class="uk-text-center">Ziua</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>6</th>
+                        <th>7</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Luni - 25</td>
+                        <td>P</td>
+                        <td>S</td>
+                        <td>S</td>
+                        <td>P</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Marți - 26</td>
+                        <td>P</td>
+                        <td>S</td>
+                        <td>L</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Miercuri - 27</td>
+                        <td>P</td>
+                        <td>P</td>
+                        <td>S</td>
+                        <td>L</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Joi - 28</td>
+                        <td>P</td>
+                        <td>P</td>
+                        <td>S</td>
+                        <td>S</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Vineri - 29</td>
+                        <td></td>
+                        <td>S</td>
+                        <td>L</td>
+                        <td>S</td>
+                        <td>S</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Sâmbătă - 30</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Duminică - 1</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="tableLegend" class="uk-flex uk-flex-center">
+                <p class="text-white">P - Prelegere</p>
+                <p class="text-white">S - Seminar</p>
+                <p class="text-white">L - Laborator</p>
+                <p class="text-white">PC - Proiect de Curs</p>
+                <p class="text-white">EP - Evaluare periodică</p>
+                <p class="text-white">C - Consultație</p>
+                <p class="text-white">E - Examinare</p>
+                <p class="text-white">R - Reexaminare</p>
+                <p class="text-white">SP - Seminar prealabil</p>
+                <p class="text-white">ST - Seminar de totalizare</p>
+            </div>
+        </section>
+        <section id="section2" class="uk-width-3-5@xl uk-width-3-5@l uk-width-3-5@m uk-width-3-5@s uk-width-1-1 uk-grid-margin uk-first-column">
+            <table id="tableForLesssons" class="uk-table uk-margin-remove-top">
+            <td data-id="weekTrigger" class="uk-background-green uk-text-center shortDay uk-padding-remove">L - 25</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Teoria numerelor<br/>conf. univ., dr.Zastînceanu L.<br/>aud.236" title aria-expanded="false" style="background-color: rgb(168, 84, 0);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Trigonometria<br/>asist. univ.Rotari T. V.<br/>aud.234" title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Filosofia. Probleme filosofice ale domeniului<br/>asist. univ.O. Jacota<br/>aud.505" title aria-expanded="false" style="background-color: rgb(0, 64, 128);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Proiectarea paginilor WEB<br/>lect. univ., dr.G. Cabac<br/>aud.224" title aria-expanded="false" style="background-color: rgb(128, 128, 192);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+        </tr>
+        <tr>
+            <td data-id="weekTrigger" class="uk-background-green uk-text-center shortDay uk-padding-remove">Ma - 26</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Pedagogie<br/>conf. univ., drA. Bejan<br/>aud.224" title aria-expanded="false" style="background-color: rgb(220, 215, 163);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Filosofia. Probleme filosofice ale domeniului<br/>asist. univ.O. Jacota<br/>aud.507" title aria-expanded="false" style="background-color: rgb(0, 64, 128);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Programarea orientată pe obiect I<br/>asist. univ.Maidacenco A.<br/>aud.150" title aria-expanded="false" style="background-color: rgb(255, 128, 192);">L</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+        </tr>
+        <tr>
+            <td data-id="weekTrigger" class="uk-background-green uk-text-center shortDay uk-padding-remove">Mi - 27</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Teoria numerelor<br/>conf. univ., dr.Zastînceanu L.<br/>aud.236" title aria-expanded="false" style="background-color: rgb(168, 84, 0);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Teoria numerelor<br/>conf. univ., dr.Zastînceanu L.<br/>aud.236" title aria-expanded="false" style="background-color: rgb(168, 84, 0);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Teoria numerelor<br/>asist. univ.Rotari T. V.<br/>aud.234" title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Proiectarea paginilor WEB<br/>asist. univ.Chilat S.<br/>aud.141a" title aria-expanded="false" style="background-color: rgb(163, 241, 188);">L</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Pedagogie<br/>conf. univ., drA. Bejan<br/>aud.340" title aria-expanded="false" style="background-color: rgb(220, 215, 163);">EP</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+        </tr>
+        <tr>
+            <td data-id="weekTrigger" class="uk-background-green uk-text-center shortDay uk-padding-remove">J - 28</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Programarea orientată pe obiect I<br/>conf. univ., dr.Cabac E.<br/>aud.224" title aria-expanded="false" style="background-color: rgb(215, 215, 0);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Programarea orientată pe obiect I<br/>conf. univ., dr.Cabac E.<br/>aud.224" title aria-expanded="false" style="background-color: rgb(215, 215, 0);">P</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Teoria numerelor<br/>asist. univ.Rotari T. V.<br/>aud.234" title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Analiza matematică III<br/>asist. univ.Rotari T. V.<br/>aud.234" title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+        </tr>
+        <tr>
+            <td data-id="weekTrigger" class="uk-background-green uk-text-center shortDay uk-padding-remove">V - 29</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Trigonometria<br/>asist. univ.Rotari T. V.<br/>aud." title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Proiectarea paginilor WEB<br/>asist. univ.Chilat S.<br/>aud." title aria-expanded="false" style="background-color: rgb(163, 241, 188);">L</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove timetableWeek" uk-tooltip="Analiza matematică III<br/>asist. univ.Rotari T. V.<br/>aud." title aria-expanded="false" style="background-color: rgb(118, 189, 73);">S</td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+            <td class="uk-width-1-8 uk-text-center uk-background-white uk-padding-remove" style="background-color: white;"></td>
+        </tr>
+    </tbody>
+</section>
+</table>
+</body>
+</html>
